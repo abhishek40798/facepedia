@@ -115,7 +115,7 @@ const Header = () => {
         position="fixed"
         style={{ backgroundColor: theme.palette.background.alt }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <Toolbar>
             <Box
               component="a"

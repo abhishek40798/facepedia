@@ -1,5 +1,5 @@
-import React from "react";
 import { Ilinks } from "@/types";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {
   Box,
   Divider,
@@ -11,11 +11,10 @@ import {
   ListItemIcon,
   ListItemText,
   styled,
-  Toolbar,
-  Typography,
-  useTheme,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useEffect } from "react";
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -35,6 +34,13 @@ const drawerWidth = 240;
 
 export const MenuDrawer = ({ isOpen, onDrawerClose, links }: Props) => {
   const theme = useTheme();
+  const isMobileScreen = useMediaQuery('(max-width:900px)');
+  
+  useEffect(()=> {
+    if(!isMobileScreen){
+      onDrawerClose();
+    }
+  },[isMobileScreen, onDrawerClose]);
 
   return (
     <Box

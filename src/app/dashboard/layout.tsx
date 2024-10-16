@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/components/header";
 import { themeSettings } from "@/theme";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, PaletteMode, ThemeProvider } from "@mui/material/styles";
 import { useMemo } from "react";
 
 export default function DashboardLayout({
@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const mode = "light";
+  const mode: PaletteMode = "light";
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return (
     <html lang="en">

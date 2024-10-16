@@ -1,5 +1,11 @@
 import { PaletteMode } from "@mui/material";
 
+declare module "@mui/material/styles" {
+  interface TypeBackground {
+    alt: string;
+  }
+}
+
 const colorTokens = {
   grey: {
     0: "#FFFFFF",
@@ -43,6 +49,7 @@ export const themeSettings = (mode: PaletteMode) => {
             },
             background: {
               default: colorTokens.grey[800],
+              alt: colorTokens.grey[1000],
             },
           }
         : {
@@ -52,7 +59,8 @@ export const themeSettings = (mode: PaletteMode) => {
               light: colorTokens.grey[200],
             },
             background: {
-              default: colorTokens.grey[10],
+              default: colorTokens.grey[100],
+              alt: colorTokens.grey[0],
             },
           }),
     },

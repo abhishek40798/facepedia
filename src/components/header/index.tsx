@@ -11,6 +11,7 @@ import {
   InputBase,
   Menu,
   MenuItem,
+  PaletteMode,
   styled,
   Toolbar,
   Typography,
@@ -31,6 +32,10 @@ import { usePathname } from "next/navigation";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { MenuDrawer } from "./drawer";
 import { Ilinks } from "@/types";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setMode } from "@/lib/reducers/authReducer";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,7 +80,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const links:Ilinks[] = [
+const links: Ilinks[] = [
   {
     path: "/dashboard",
     name: "home",
@@ -109,6 +114,9 @@ const Header = () => {
   const { logo, mobileLogo } = images;
   const pathName = usePathname();
 
+  const mode:PaletteMode = useAppSelector((state) => state.auth.mode);
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <AppBar
@@ -140,7 +148,31 @@ const Header = () => {
                 <SearchIcon />
               </SearchIconWrapper>
             </Search>
-            <Box sx={{ flexGrow: 1 }} />
+            {/* <Box sx={{ flexGrow: 1 }} /> */}
+
+            <Box sx={{ flexGrow: 1 }}>
+              {mode === "dark" ? (
+                <IconButton onClick={()=> dispatch(setMode())}>
+                  <LightModeIcon
+                    sx={{
+                      fontSize: "30px",
+                      color: `${theme.palette.primary.light}`,
+                      cursor: "pointer",
+                    }}
+                  />
+                </IconButton>
+              ) : (
+                <IconButton onClick={()=> dispatch(setMode())}>
+                  <DarkModeIcon
+                    sx={{
+                      fontSize: "30px",
+                      color: `${theme.palette.primary.light}`,
+                      cursor: "pointer",
+                    }}
+                  />
+                </IconButton>
+              )}
+            </Box>
             <Box
               sx={{
                 display: { lg: "block", md: "block", sm: "none", xs: "none" },
@@ -157,7 +189,7 @@ const Header = () => {
                 >
                   {link.path === pathName ? link.activeIcon : link.inActiveIcon}
                   <Typography
-                    fontSize={12}
+                    fontSize={10}
                     fontWeight={600}
                     color={theme.palette.primary.light}
                     textTransform="capitalize"
@@ -211,7 +243,7 @@ const Header = () => {
                   color: "#000",
                 }}
               >
-                <MenuIcon sx={{color:`${theme.palette.primary.light}`}} />
+                <MenuIcon sx={{ color: `${theme.palette.primary.light}` }} />
               </IconButton>
             </Box>
           </Toolbar>

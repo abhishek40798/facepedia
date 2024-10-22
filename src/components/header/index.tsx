@@ -1,6 +1,20 @@
 "use client";
 
 import { images } from "@/constants";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setMode } from "@/lib/reducers/authReducer";
+import { Ilinks } from "@/types";
+import { DarkMode, LightMode } from "@mui/icons-material";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import GroupIcon from "@mui/icons-material/Group";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import HomeIcon from "@mui/icons-material/Home";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import MenuIcon from "@mui/icons-material/Menu";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   alpha,
   AppBar,
@@ -18,24 +32,9 @@ import {
   useTheme,
 } from "@mui/material";
 import Image from "next/image";
-import SearchIcon from "@mui/icons-material/Search";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import HomeIcon from "@mui/icons-material/Home";
-import GroupIcon from "@mui/icons-material/Group";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import { usePathname } from "next/navigation";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useState } from "react";
 import { MenuDrawer } from "./drawer";
-import { Ilinks } from "@/types";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { setMode } from "@/lib/reducers/authReducer";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -46,11 +45,11 @@ const Search = styled("div")(({ theme }) => ({
   //     backgroundColor: alpha(theme.palette.common.white, 0.25),
   //   },
   width: "auto",
-  marginInline: theme.spacing(2),
+  marginInline: theme.spacing(1.5),
   //   marginLeft: 0,
-  [theme.breakpoints.down("sm")]: {
-    marginLeft: theme.spacing(5),
-  },
+  // [theme.breakpoints.down("sm")]: {
+  //   marginLeft: theme.spacing(5),
+  // },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -114,7 +113,7 @@ const Header = () => {
   const { logo, mobileLogo } = images;
   const pathName = usePathname();
 
-  const mode:PaletteMode = useAppSelector((state) => state.auth.mode);
+  const mode: PaletteMode = useAppSelector((state) => state.auth.mode);
   const dispatch = useAppDispatch();
 
   return (
@@ -124,7 +123,7 @@ const Header = () => {
         style={{ backgroundColor: theme.palette.background.alt }}
       >
         <Container maxWidth="lg">
-          <Toolbar>
+          <Toolbar sx={{ padding: "0px !important" }}>
             <Box
               component="a"
               href="#"
@@ -151,27 +150,16 @@ const Header = () => {
             {/* <Box sx={{ flexGrow: 1 }} /> */}
 
             <Box sx={{ flexGrow: 1 }}>
-              {mode === "dark" ? (
-                <IconButton onClick={()=> dispatch(setMode())}>
-                  <LightModeIcon
-                    sx={{
-                      fontSize: "30px",
-                      color: `${theme.palette.primary.light}`,
-                      cursor: "pointer",
-                    }}
-                  />
-                </IconButton>
-              ) : (
-                <IconButton onClick={()=> dispatch(setMode())}>
-                  <DarkModeIcon
-                    sx={{
-                      fontSize: "30px",
-                      color: `${theme.palette.primary.light}`,
-                      cursor: "pointer",
-                    }}
-                  />
-                </IconButton>
-              )}
+              <IconButton
+                onClick={() => dispatch(setMode())}
+                sx={{
+                  fontSize: "30px",
+                  color: `${theme.palette.primary.light}`,
+                  cursor: "pointer",
+                }}
+              >
+                {mode !== "dark" ? <LightMode /> : <DarkMode />}
+              </IconButton>
             </Box>
             <Box
               sx={{
@@ -239,9 +227,6 @@ const Header = () => {
                 size="large"
                 disableRipple
                 onClick={() => setMobileOpen(true)}
-                sx={{
-                  color: "#000",
-                }}
               >
                 <MenuIcon sx={{ color: `${theme.palette.primary.light}` }} />
               </IconButton>
@@ -249,11 +234,13 @@ const Header = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <MenuDrawer
-        isOpen={mobileOpen}
-        onDrawerClose={() => setMobileOpen(false)}
-        links={links}
-      />
+      {mobileOpen && (
+        <MenuDrawer
+          isOpen={mobileOpen}
+          onDrawerClose={() => setMobileOpen(false)}
+          links={links}
+        />
+      )}
     </>
   );
 };

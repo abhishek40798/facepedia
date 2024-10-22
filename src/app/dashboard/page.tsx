@@ -1,9 +1,9 @@
+import { Container } from "@mui/material";
 
 export default function Dashboard() {
-    return (
-      <>
-      <div>Hello1</div>
-      </>
-    );
-  }
-  
+  return (
+    <Container maxWidth="lg">
+      <p>Hiii</p>
+    </Container>
+  );
+}

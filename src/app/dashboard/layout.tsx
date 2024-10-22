@@ -1,25 +1,19 @@
 "use client";
 import Header from "@/components/header";
-import { useAppSelector } from "@/lib/hooks";
-import { themeSettings } from "@/theme";
-import { createTheme, PaletteMode, ThemeProvider } from "@mui/material/styles";
-import { useMemo } from "react";
+import { useTheme } from "@mui/material";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const mode: PaletteMode = useAppSelector(state => state.auth.mode);
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const theme = useTheme();
   return (
     <html lang="en">
-      <ThemeProvider theme={theme}>
-        <body>
+        <body style={{background:theme.palette.background.default}}>
           <Header />
           {children}
         </body>
-      </ThemeProvider>
     </html>
   );
 }

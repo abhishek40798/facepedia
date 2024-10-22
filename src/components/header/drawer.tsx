@@ -1,5 +1,5 @@
 import { Ilinks } from "@/types";
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Divider,
@@ -12,17 +12,17 @@ import {
   ListItemText,
   styled,
   useMediaQuery,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import { useEffect } from "react";
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
-  }));
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-start",
+}));
 
 interface Props {
   isOpen: boolean;
@@ -34,13 +34,13 @@ const drawerWidth = 240;
 
 export const MenuDrawer = ({ isOpen, onDrawerClose, links }: Props) => {
   const theme = useTheme();
-  const isMobileScreen = useMediaQuery('(max-width:900px)');
-  
-  useEffect(()=> {
-    if(!isMobileScreen){
+  const isMobileScreen = useMediaQuery("(max-width:900px)");
+
+  useEffect(() => {
+    if (!isMobileScreen) {
       onDrawerClose();
     }
-  },[isMobileScreen, onDrawerClose]);
+  }, [isMobileScreen, onDrawerClose]);
 
   return (
     <Box
@@ -60,21 +60,27 @@ export const MenuDrawer = ({ isOpen, onDrawerClose, links }: Props) => {
             boxSizing: "border-box",
             width: drawerWidth,
             backgroundColor: `${theme.palette.background.alt}`,
-            backgroundImage:"none"
+            backgroundImage: "none",
           },
         }}
       >
         <DrawerHeader>
-        <IconButton onClick={onDrawerClose}>
-             <ChevronRightIcon /> 
+          <IconButton onClick={onDrawerClose}>
+            <CloseIcon />
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           {links.map((link) => (
-            <ListItem key={link.name} disablePadding onClick={()=> console.log(`${link.path}`)}>
+            <ListItem
+              key={link.name}
+              disablePadding
+              onClick={() => console.log(`${link.path}`)}
+            >
               <ListItemButton>
-                <ListItemIcon>{link.inActiveIcon}</ListItemIcon>
+                <ListItemIcon sx={{ minWidth: "36px" }}>
+                  {link.inActiveIcon}
+                </ListItemIcon>
                 <ListItemText
                   primary={link.name}
                   sx={{ textTransform: "capitalize" }}

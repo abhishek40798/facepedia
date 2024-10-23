@@ -2,6 +2,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Box, Button, Divider, Stack, styled, Typography } from "@mui/material";
 import MuiCard from "@mui/material/Card";
+import { signIn } from "next-auth/react";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -30,6 +31,7 @@ export const AuthWrapper = ({
   children: React.ReactNode;
   title: string;
 }>) => {
+  
   return (
     <SignUpContainer direction="column" justifyContent="space-between">
       <Card variant="outlined">
@@ -50,7 +52,7 @@ export const AuthWrapper = ({
           <Button
             fullWidth
             variant="outlined"
-            onClick={() => alert("Sign up with Google")}
+            onClick={() => signIn("google")}
             startIcon={<GoogleIcon />}
           >
             {title} with Google

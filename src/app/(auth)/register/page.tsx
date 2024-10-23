@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
+import { signIn, SignInResponse } from "next-auth/react";
 import Link from "next/link";
 import * as Yup from "yup";
 
@@ -22,8 +23,7 @@ const Register = () => {
       email: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string()
-        .required("Name should not be empty"),
+      name: Yup.string().required("Name should not be empty"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email should not be empty"),
@@ -31,8 +31,19 @@ const Register = () => {
         .min(8, "Must be 8 characters")
         .required("Password should not be empty"),
     }),
-    onSubmit: (values) => {
-      console.log(values, "sss");
+    onSubmit: async (values) => {
+      const result: SignInResponse | undefined = await signIn("credentials", {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        console.error(result.error);
+      } else {
+        console.log("Sign-in successful:", result);
+      }
     },
   });
 

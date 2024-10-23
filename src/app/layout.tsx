@@ -1,6 +1,7 @@
+import { AuthProvider } from "@/components/providers/authProvider";
+import StoreProvider from "@/components/providers/storeProvider";
 import type { Metadata } from "next";
 import "./globals.css";
-import StoreProvider from "@/components/redux/storeProvider";
 
 export const metadata: Metadata = {
   title: "Facepedia",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </StoreProvider>
       </body>
     </html>
   );
